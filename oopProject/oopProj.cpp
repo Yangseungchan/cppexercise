@@ -49,20 +49,31 @@ NormalAccount::NormalAccount(int ID, int money, const char *name, int rate) : Ac
 
 void NormalAccount::Deposit(int money)
 {
-    Account::Deposit(money + (money * interest_rate) / 10);
+    Account::Deposit(money + (money * interest_rate) / 100);
 }
 
-HighCreditAccount::HighCreditAccount(int ID, int money, const char *name, int rate, int grade) : NormalAccount(ID, money, name, rate), credit_grade(grade) {}
+HighCreditAccount::HighCreditAccount(int ID, int money, const char *name, int rate, int grade) : NormalAccount(ID, money, name, rate) {
+  switch(grade)
+  {
+    case 1:
+      credit_grade = 7;
+      break;
+    case 2:
+      credit_grade = 4;
+      break;
+    case 3:
+      credit_grade = 2;
+      break;
+  }
+}
 
 void HighCreditAccount::Deposit(int money)
 {
     NormalAccount::Deposit(money);
-    Account::Deposit(money * credit_grade / 10);
+    Account::Deposit(money * credit_grade / 100);
 }
 
-AccountHandler::AccountHandler() : accNum(0)
-{
-}
+AccountHandler::AccountHandler() : accNum(0){}
 
 void AccountHandler::ShowMenu(void) const
 {
@@ -76,20 +87,48 @@ void AccountHandler::ShowMenu(void) const
 
 void AccountHandler::MakeAccount(void)
 {
-    int id;
+    int id, choice;
     char name[NAME_LEN];
-    int balance;
+    int balance, rate, grade;
 
-    cout << "[계좌개설]" << endl;
+    cout << "[계좌종류선택]"<<endl;
+    cout << "1. 보통예금계좌 2.신용신뢰계좌" << endl;
+    cout << "선택: "; cin >> choice;
+    
+    switch(choice)
+    {
+      case 1:
+        cout << "[보통예금계좌 개설]" << endl;
+        break;
+      case 2:
+        cout << "[신용신뢰계좌 개설]" << endl;
+        break;
+    }
     cout << "계좌ID: ";
     cin >> id;
     cout << "이  름: ";
     cin >> name;
-    cout << "입금액:  ";
+    cout << "입금액: ";
     cin >> balance;
+    cout << "이자율: ";
+    cin >> rate;
+    if(choice == 2)
+    {
+      cout << "신용등급(1toA, 2toB, 3toC): "; 
+      cin >> grade; 
+    }
     cout << endl;
 
-    accArr[accNum++] = new Account(id, balance, name);
+    switch(choice)
+    {
+      case 1:
+        accArr[accNum++] = new NormalAccount(id, balance, name, rate);
+        break;
+      case 2:
+        accArr[accNum++] = new HighCreditAccount(id, balance, name, rate, grade);
+        break;
+    }
+    return;
 }
 
 void AccountHandler::DepositMoney(void)
@@ -121,9 +160,9 @@ void AccountHandler::WithdrawMoney(void)
     int money;
     int id;
     cout << "[출   금]" << endl;
-    cout << "계좌ID:  ";
+    cout << "계좌ID: ";
     cin >> id;
-    cout << "출금액:  ";
+    cout << "출금액: ";
     cin >> money;
 
     for (int i = 0; i < accNum; i++)
