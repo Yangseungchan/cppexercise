@@ -1,0 +1,15 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Lldb debug",
+      "program": "~/Desktop/cpp/shallow" /* 디버그 하고자 하는 파일로 변경시켜야함 */,
+      "args": [],
+      "preLaunchTask": "C/C++: g++ build active file",
+      "stdio": [null, null, null],
+      "terminal": "integrated"
+    }
+  ]
+}
