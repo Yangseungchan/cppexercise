@@ -8,17 +8,10 @@ private:
     int xpos, ypos;
 
 public:
-    Point(int x = 0, int y = 0) : xpos(x), ypos(y)
-    {
-    }
+    Point(int x = 0, int y = 0) : xpos(x), ypos(y) {}
     void ShowPosition() const
     {
         cout << '[' << xpos << ", " << ypos << ']' << endl;
-    }
-    Point operator-()
-    {
-        Point pos(xpos * -1, ypos * -1);
-        return pos;
     }
     Point &operator++()
     {
@@ -26,8 +19,17 @@ public:
         ypos++;
         return *this;
     }
+
+    const Point operator++(int)
+    {
+        const Point retobj(xpos, ypos);
+        xpos += 1;
+        ypos += 1;
+        return retobj;
+    }
+
     friend Point &operator--(Point &pos);
-    friend Point operator~(Point &pos);
+    friend const Point operator--(Point &pos, int);
 };
 
 Point &operator--(Point &pos)
@@ -37,20 +39,30 @@ Point &operator--(Point &pos)
     return pos;
 }
 
-Point operator~(Point &pos)
+const Point operator--(Point &pos, int)
 {
-    Point ptr(pos.ypos, pos.xpos);
-    return ptr;
+    const Point retobj(pos);
+    pos.xpos -= 1;
+    pos.ypos -= 1;
+    return retobj;
 }
 
 int main(void)
 {
-    Point pos1(3, 4);
-    Point pos2 = -pos1;
-    Point pos3 = ~pos1;
+    Point pos(3, 5);
+    Point cpy;
 
-    pos2.ShowPosition();
-    pos3.ShowPosition();
+    int n1 = 2;
+
+    cpy = pos--;
+    cpy.ShowPosition();
+    pos.ShowPosition();
+
+    cpy = pos++;
+    cpy.ShowPosition();
+    pos.ShowPosition();
+
+    ++(++pos);
 
     return 0;
 }
