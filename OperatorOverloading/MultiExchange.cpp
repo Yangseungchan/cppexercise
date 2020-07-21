@@ -18,10 +18,10 @@ public:
         return retobj;
     }
 
-    friend Point operator*(int times, const Point &obj); /* operator*(3, obj) = 3 * obj; */
+    friend Point operator*(int times, Point &obj); /* operator*(3, obj) = 3 * obj; */
 };
 
-Point operator*(int times, const Point &obj)
+Point operator*(int times, Point &obj)
 {
     Point pos(obj.xpos * times, obj.ypos * times);
     return pos;
