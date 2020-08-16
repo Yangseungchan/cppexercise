@@ -82,10 +82,10 @@ int main(void)
     Police p1(12, 3);
     Police p2(0, 0);
 
-    p2 = p1;
+    p2 = p1; // 대입 연산자 호출
     p2.ShowData();
 
-    Police p3 = p1;
+    Police p3 = p1; // 복사 생성자 호출
     p3.ShowData();
 
     return 0;

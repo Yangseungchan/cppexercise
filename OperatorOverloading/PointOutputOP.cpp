@@ -12,6 +12,7 @@ public:
     void ShowPosition() const { cout << "[" << xpos << ", " << ypos << "]" << endl; }
 
     friend ostream &operator<<(ostream &otm, const Point &pos);
+    friend istream &operator>>(istream &itm, Point &pos);
 };
 
 ostream &operator<<(ostream &otm, const Point &pos)
@@ -20,14 +21,24 @@ ostream &operator<<(ostream &otm, const Point &pos)
     return otm;
 }
 
+istream &operator>>(istream &itm, Point &pos)
+{
+    itm >> pos.xpos;
+    itm >> pos.ypos;
+    return itm;
+}
+
 int main(void)
 {
-    Point pos(3, 4);
+    Point pos1;
+    cout << "x, y좌표 순으로 입력: ";
+    cin >> pos1;
+    cout << pos1;
 
-    cout << pos;
-
-    /* cout.operator<<(pos) [멤버함수]; operator<<(cout, pos) [전역함수];*/
+    Point pos2;
+    cout << "x, y좌표 순으로 입력: ";
+    cin >> pos2;
+    cout << pos2;
 
     return 0;
 }
-

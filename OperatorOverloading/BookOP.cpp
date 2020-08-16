@@ -92,7 +92,7 @@ int main(void)
 {
     EBook eb1("helloworld", "1234-5678", 30000, "12313");
 
-    EBook eb2 = eb1;
+    EBook eb2 = eb1; // 복사생성자 호출
 
     eb2.ShowData();
     cout << endl
@@ -102,7 +102,7 @@ int main(void)
     eb3.ShowData();
     cout << endl
          << endl;
-    eb3 = eb1;
+    eb3 = eb1; // 대입연산자 호출
     eb3.ShowData();
 
     return 0;
