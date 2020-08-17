@@ -13,9 +13,7 @@ public:
     friend ostream &operator<<(ostream &ostm, const Point &ref);
     friend ostream &operator<<(ostream &ostm, const Point *ref);
     //friend ostream &operator<<(ostream &ostm, const Point* &ref); 가 안되는 이유
-    // 1. main함수에서 매개변수로 받는 대상이 Point의 포인터형의 레퍼런스다.
-    // 2. 그런데 선언된 멤버함수의 매개변수 선언 역시 Point의 포인터형 레퍼런스이기 때문에 이는 레퍼런스에 대한 레퍼런스를 형성해 버린다
-    // 3. 따라서 문법적으로 잘못된 선택이된다.
+    //ref의 자료형이 포인트형 레퍼런스의 주소가 되고 이는 레퍼런스의 정의에서 벗어난 의미이기 때문이다.
 };
 
 ostream &operator<<(ostream &ostm, const Point &ref)
