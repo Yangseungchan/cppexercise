@@ -11,11 +11,22 @@ private:
 public:
     Point(int x = 0, int y = 0) : xpos(x), ypos(y) {}
     friend ostream &operator<<(ostream &ostm, const Point &ref);
+    friend ostream &operator<<(ostream &ostm, const Point *ref);
+    //friend ostream &operator<<(ostream &ostm, const Point* &ref); 가 안되는 이유
+    // 1. main함수에서 매개변수로 받는 대상이 Point의 포인터형의 레퍼런스다.
+    // 2. 그런데 선언된 멤버함수의 매개변수 선언 역시 Point의 포인터형 레퍼런스이기 때문에 이는 레퍼런스에 대한 레퍼런스를 형성해 버린다
+    // 3. 따라서 문법적으로 잘못된 선택이된다.
 };
 
 ostream &operator<<(ostream &ostm, const Point &ref)
 {
     cout << '[' << ref.xpos << ", " << ref.ypos << ']' << endl;
+    return ostm;
+}
+
+ostream &operator<<(ostream &ostm, const Point *ref)
+{
+    cout << '[' << ref->xpos << ", " << ref->ypos << ']' << endl;
     return ostm;
 }
 
@@ -138,7 +149,14 @@ int main(void)
     ptr_ptrarr[1] = new Point(4, 5);
     ptr_ptrarr[2] = new Point(5, 6);
 
-    ShowData(ptr_ptrarr);
+    //ShowData(ptr_ptrarr);
+
+    for (int i = 0; i < ptr_ptrarr.GetArrLen(); i++)
+        cout << ptr_ptrarr[i];
+
+    delete ptr_ptrarr[0];
+    delete ptr_ptrarr[1];
+    delete ptr_ptrarr[2];
 
     return 0;
 }
