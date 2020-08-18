@@ -1,9 +1,7 @@
 #include "BankingCommonDecl.h"
 #include "AccountHandler.h"
 
-AccountHandler::AccountHandler() : accNum(0)
-{
-}
+AccountHandler::AccountHandler() : accNum(0) {}
 
 void AccountHandler::ShowMenu(void) const
 {
