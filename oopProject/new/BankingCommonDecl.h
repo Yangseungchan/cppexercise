@@ -4,9 +4,7 @@
 #include <iostream>
 #include <cstring>
 
-using std::cin;
-using std::cout;
-using std::endl;
+using namespace std;
 
 const int NAME_LEN = 20;
 

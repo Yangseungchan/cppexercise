@@ -1,5 +1,9 @@
 #include "BankingCommonDecl.h"
 #include "AccountHandler.h"
+#include "Account.h"
+#include "NormalAccount.h"
+#include "HighCreditAccount.h"
+#include "String.h"
 
 AccountHandler::AccountHandler() : accNum(0) {}
 
@@ -15,20 +19,50 @@ void AccountHandler::ShowMenu(void) const
 
 void AccountHandler::MakeAccount(void)
 {
-    int id;
+    int id, choice;
     char name[NAME_LEN];
-    int balance;
+    int balance, rate, grade;
 
-    cout << "[계좌개설]" << endl;
+    cout << "[계좌종류선택]" << endl;
+    cout << "1. 보통예금계좌 2.신용신뢰계좌" << endl;
+    cout << "선택: ";
+    cin >> choice;
+
+    switch (choice)
+    {
+    case 1:
+        cout << "[보통예금계좌 개설]" << endl;
+        break;
+    case 2:
+        cout << "[신용신뢰계좌 개설]" << endl;
+        break;
+    }
     cout << "계좌ID: ";
     cin >> id;
     cout << "이  름: ";
     cin >> name;
-    cout << "입금액:  ";
+    String str_name(name);
+    cout << "입금액: ";
     cin >> balance;
+    cout << "이자율: ";
+    cin >> rate;
+    if (choice == 2)
+    {
+        cout << "신용등급(1toA, 2toB, 3toC): ";
+        cin >> grade;
+    }
     cout << endl;
 
-    accArr[accNum++] = new Account(id, balance, name);
+    switch (choice)
+    {
+    case 1:
+        accArr[accNum++] = new NormalAccount(id, balance, str_name, rate);
+        break;
+    case 2:
+        accArr[accNum++] = new HighCreditAccount(id, balance, str_name, rate, grade);
+        break;
+    }
+    return;
 }
 
 void AccountHandler::DepositMoney(void)
