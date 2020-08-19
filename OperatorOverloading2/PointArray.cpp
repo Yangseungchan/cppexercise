@@ -11,18 +11,19 @@ private:
 public:
     Point(int x = 0, int y = 0) : xpos(x), ypos(y) {}
     friend ostream &operator<<(ostream &ostm, const Point &ref);
+    // friend 함수이기 때문에 private 멤버에 접근이 가능하다
     friend ostream &operator<<(ostream &ostm, const Point *ref);
-    //friend ostream &operator<<(ostream &ostm, const Point* &ref); 가 안되는 이유
-    //ref의 자료형이 포인트형 레퍼런스의 주소가 되고 이는 레퍼런스의 정의에서 벗어난 의미이기 때문이다.
 };
 
 ostream &operator<<(ostream &ostm, const Point &ref)
+//Point 레퍼런스의 멤버를 출력하는 연산자
 {
     cout << '[' << ref.xpos << ", " << ref.ypos << ']' << endl;
     return ostm;
 }
 
 ostream &operator<<(ostream &ostm, const Point *ref)
+//Point 포인터의 멤버를 출력하는 연산자
 {
     cout << '[' << ref->xpos << ", " << ref->ypos << ']' << endl;
     return ostm;
@@ -51,7 +52,7 @@ public:
         return parr[idx];
     }
 
-    Point &operator[](int idx) const // [] operator for the const  PointArr object
+    Point operator[](int idx) const // [] operator for the const  PointArr object
     {
         if (idx < 0 || idx >= arr_len)
         {
@@ -67,7 +68,7 @@ public:
     }
 };
 
-typedef Point *POINT_PTR;
+typedef Point *POINT_PTR; // POINT_PTR = Point *
 
 class PointPTRArr
 {
@@ -93,7 +94,7 @@ public:
         return ptrarr[idx];
     }
 
-    POINT_PTR &operator[](int idx) const
+    POINT_PTR operator[](int idx) const
     {
         if (idx < 0 || idx >= arr_len)
         {
