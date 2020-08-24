@@ -1,7 +1,6 @@
 #include <iostream>
 #include "ArrayTemplate.h"
 #include "Point.h"
-#include "Point.cpp"
 
 using namespace std;
 
