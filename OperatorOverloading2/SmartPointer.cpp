@@ -29,7 +29,7 @@ ostream &operator<<(ostream &ostm, const Point &ref)
     return ostm;
 }
 
-class SmartPtrx
+class SmartPtr
 {
 private:
     Point *posptr;
