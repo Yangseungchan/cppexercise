@@ -4,6 +4,7 @@
 #include "NormalAccount.h"
 #include "HighCreditAccount.h"
 #include "String.h"
+#include "AccountException.h"
 
 AccountHandler::AccountHandler() : accNum(0) {}
 
@@ -75,6 +76,23 @@ void AccountHandler::DepositMoney(void)
     cout << "입금액: ";
     cin >> money;
 
+    while (1)
+    {
+        try
+        {
+            if (money < 0)
+            {
+                throw MoneyNegativeException(1, money);
+            }
+            break;
+        }
+        catch (MoneyNegativeException &negexp)
+        {
+            negexp.ShowExceptionReason();
+            money = negexp.inputmoney();
+        }
+    }
+
     for (int i = 0; i < accNum; i++)
     {
         if (accArr[i]->GetAccID() == id)
@@ -99,20 +117,47 @@ void AccountHandler::WithdrawMoney(void)
     cout << "출금액:  ";
     cin >> money;
 
+    while (1)
+    {
+        try
+        {
+            if (money < 0)
+            {
+                throw MoneyNegativeException(2, money);
+            }
+            break;
+        }
+        catch (MoneyNegativeException &negexp)
+        {
+            negexp.ShowExceptionReason();
+            money = negexp.inputmoney();
+        }
+    }
+
     for (int i = 0; i < accNum; i++)
     {
         if (accArr[i]->GetAccID() == id)
         {
-            if (accArr[i]->Withdraw(money) == 0)
+            while (1)
             {
-                cout << "잔액부족" << endl
-                     << endl;
-                return;
+                try
+                {
+                    if (accArr[i]->Withdraw(money) == 0)
+                    {
+                        throw WithdrawException(money);
+                    }
+                    break;
+                }
+                catch (WithdrawException &wdexp)
+                {
+                    wdexp.ShowExceptionReason();
+                    money = wdexp.inputmoney();
+                }
             }
-            cout << "출금완료" << endl
-                 << endl;
-            return;
         }
+        cout << "출금완료" << endl
+             << endl;
+        return;
     }
     cout << "유효하지 않은 ID 입니다." << endl
          << endl;
